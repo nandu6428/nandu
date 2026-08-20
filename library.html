@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Photo Library</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", "Segoe UI", Arial, sans-serif;
+            background: #050505;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            padding: 20px 50px;
+
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            z-index: 1000;
+
+            animation: navDown 0.8s ease;
+        }
+
+        nav h2 {
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #cfcfcf;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        /* LIBRARY */
+
+        .library {
+            min-height: 100vh;
+
+            padding: 140px 8% 100px;
+
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(255,255,255,0.04),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(255,255,255,0.03),
+                    transparent 30%
+                ),
+                #050505;
+        }
+
+        /* TITLE */
+
+        .library h1 {
+            text-align: center;
+
+            margin-bottom: 60px;
+
+            font-size: 50px;
+
+            font-weight: 700;
+
+            color: #ffffff;
+
+            animation: titleAppear 1s ease;
+        }
+
+        /* PHOTO GRID */
+
+        .photos {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(250px, 1fr));
+
+            gap: 30px;
+
+            max-width: 1200px;
+
+            margin: auto;
+        }
+
+        /* PHOTO CARD */
+
+        .photo {
+            background: rgba(255,255,255,0.06);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            border-radius: 20px;
+
+            padding: 15px;
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.45),
+                inset 0 1px 1px rgba(255,255,255,0.04);
+
+            overflow: hidden;
+
+            opacity: 0;
+
+            animation: photoAppear 0.9s ease forwards;
+
+            transition:
+                transform 0.5s ease,
+                box-shadow 0.5s ease,
+                border-color 0.5s ease;
+        }
+
+        /* HOVER */
+
+        .photo:hover {
+            transform: translateY(-12px) scale(1.03);
+
+            border-color: rgba(255,255,255,0.25);
+
+            box-shadow:
+                0 25px 60px rgba(0,0,0,0.7),
+                inset 0 1px 1px rgba(255,255,255,0.08);
+        }
+
+        /* IMAGE */
+
+        .photo img {
+            width: 100%;
+            height: 250px;
+
+            object-fit: cover;
+
+            border-radius: 13px;
+
+            display: block;
+
+            transition:
+                transform 0.7s ease,
+                filter 0.5s ease;
+        }
+
+        .photo:hover img {
+            transform: scale(1.08);
+            filter: brightness(1.1);
+        }
+
+        /* PHOTO TITLE */
+
+        .photo h3 {
+            margin-top: 18px;
+            margin-bottom: 5px;
+
+            text-align: center;
+
+            font-size: 19px;
+
+            color: #ffffff;
+
+            font-weight: 600;
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes navDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes titleAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes photoAppear {
+            from {
+                opacity: 0;
+                transform: translateY(70px) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            nav ul {
+                gap: 12px;
+            }
+
+            nav a {
+                font-size: 14px;
+            }
+
+            .library {
+                padding: 120px 20px 70px;
+            }
+
+            .library h1 {
+                font-size: 38px;
+            }
+
+            .photo img {
+                height: 220px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav>
+
+        <h2>My Website</h2>
+
+        <ul>
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="library.html">Library</a>
+            </li>
+
+            <li>
+                <a href="about.html">About</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- PHOTO LIBRARY -->
+
+    <section class="library">
+
+        <h1>Photo Library</h1>
+
+        <div class="photos" id="photoContainer"></div>
+
+    </section>
+
+
+    <!-- PHOTO SYSTEM -->
+
+    <script>
+
+        /*
+         * ==========================================
+         * ADD YOUR PHOTOS HERE
+         * ==========================================
+         *
+         * Put your picture inside the "images" folder.
+         *
+         * Then add ONLY the filename here.
+         *
+         */
+
+        const photos = [
+
+            "wallpaper1.jpg",
+            "wallpaper2.jpg",
+            "wallpaper3.jpg",
+            "wallpaper4.jpg"
+
+        ];
+
+
+        /*
+         * ==========================================
+         * AUTOMATIC PHOTO CREATION
+         * ==========================================
+         */
+
+        const container =
+            document.getElementById("photoContainer");
+
+
+        photos.forEach((photo, index) => {
+
+            const card = document.createElement("div");
+
+            card.className = "photo";
+
+            card.style.animationDelay =
+                (index * 0.2) + "s";
+
+
+            const image =
+                document.createElement("img");
+
+            image.src = "images/" + photo;
+
+            image.alt = "Photo " + (index + 1);
+
+
+            const title =
+                document.createElement("h3");
+
+            title.textContent =
+                "Photo " + (index + 1);
+
+
+            card.appendChild(image);
+
+            card.appendChild(title);
+
+            container.appendChild(card);
+
+        });
+
+    </script>
+
+</body>
+</html>
