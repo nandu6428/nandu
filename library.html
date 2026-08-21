@@ -2,39 +2,914 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Photo Library</title>
 
-
     <style>
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-
         html {
             scroll-behavior: smooth;
         }
 
-
         body {
             font-family: "Segoe UI", Arial, sans-serif;
-
             background: #050505;
-
             color: white;
-
             overflow-x: hidden;
         }
 
+        /* =========================
+           HEADER
+        ========================= */
 
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            width: 100%;
+            padding: 18px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(5, 5, 5, 0.88);
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        nav a {
+            color: #ddd;
+            text-decoration: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 45vh;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            padding: 70px 20px 50px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 7vw, 80px);
+            line-height: 1.05;
+
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #999999
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            margin-bottom: 18px;
+        }
+
+        .hero p {
+            max-width: 650px;
+            color: #999;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           LIBRARY
+        ========================= */
+
+        .library-container {
+            width: 88%;
+            max-width: 1400px;
+            margin: auto;
+
+            padding-bottom: 100px;
+        }
+
+        .library-title {
+            margin-bottom: 30px;
+        }
+
+        .library-title h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .library-title p {
+            color: #777;
+        }
+
+        /* =========================
+           WALLPAPER GRID
+        ========================= */
+
+        .wallpaper-grid {
+            display: grid;
+
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(260px, 1fr)
+            );
+
+            gap: 24px;
+        }
+
+        .wallpaper-card {
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 18px;
+
+            background: #111;
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+
+            opacity: 0;
+            transform: translateY(30px);
+
+            animation: cardAppear 0.7s ease forwards;
+
+            transition: transform 0.35s ease,
+                        border-color 0.35s ease,
+                        box-shadow 0.35s ease;
+        }
+
+        .wallpaper-card:hover {
+            transform: translateY(-8px);
+
+            border-color: rgba(255, 255, 255, 0.25);
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .wallpaper-card img {
+            display: block;
+
+            width: 100%;
+            height: 330px;
+
+            object-fit: cover;
+
+            transition: transform 0.6s ease;
+        }
+
+        .wallpaper-card:hover img {
+            transform: scale(1.06);
+        }
+
+        .wallpaper-info {
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            padding: 25px 20px 18px;
+
+            background: linear-gradient(
+                transparent,
+                rgba(0, 0, 0, 0.9)
+            );
+        }
+
+        .wallpaper-info h3 {
+            font-size: 17px;
+        }
+
+        .wallpaper-info span {
+            display: block;
+
+            margin-top: 4px;
+
+            color: #999;
+            font-size: 13px;
+        }
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        #loading {
+            text-align: center;
+            padding: 60px 20px;
+
+            color: #888;
+
+            font-size: 16px;
+        }
+
+        .loader {
+            width: 35px;
+            height: 35px;
+
+            margin: 0 auto 18px;
+
+            border: 3px solid #333;
+            border-top-color: white;
+
+            border-radius: 50%;
+
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* =========================
+           ERROR
+        ========================= */
+
+        #error {
+            display: none;
+
+            text-align: center;
+
+            padding: 50px 20px;
+
+            color: #888;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        #empty {
+            display: none;
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+            color: #777;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            padding: 40px 20px;
+
+            color: #555;
+
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* =========================
+           ANIMATIONS
+        ========================= */
+
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 15px 5%;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            nav {
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 13px;
+            }
+
+            .hero {
+                min-height: 38vh;
+                padding-top: 50px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .library-container {
+                width: 92%;
+            }
+
+            .wallpaper-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wallpaper-card img {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+
+        <div class="logo">
+            My Website
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="library.html">Library</a>
+            <a href="about.html">About</a>
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+        <h1>Library</h1>
+
+        <p>
+            Explore the collection of wallpapers and images.
+            New wallpapers are automatically added when they
+            are uploaded to the website.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         LIBRARY CONTENT
+    ========================= -->
+
+    <main class="library-container">
+
+        <div class="library-title">
+
+            <h2>Wallpapers</h2>
+
+            <p id="wallpaper-count">
+                Loading wallpapers...
+            </p>
+
+        </div>
+
+
+        <!-- Loading -->
+
+        <div id="loading">
+
+            <div class="loader"></div>
+
+            Loading wallpapers...
+
+        </div>
+
+
+        <!-- Error -->
+
+        <div id="error">
+
+            <h2>Unable to load the library</h2>
+
+            <p>
+                Please refresh the page and try again.
+            </p>
+
+        </div>
+
+
+        <!-- Empty -->
+
+        <div id="empty">
+
+            <h2>No wallpapers found</h2>
+
+            <p>
+                Upload wallpapers to the GitHub repository
+                to display them here.
+            </p>
+
+        </div>
+
+
+        <!-- Wallpapers will automatically appear here -->
+
+        <div
+            id="wallpaper-grid"
+            class="wallpaper-grid">
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        © 2026 My Website
+
+    </footer>
+
+
+    <script>
+
+        /*
+        =====================================================
+        AUTOMATIC WALLPAPER SYSTEM
+        =====================================================
+
+        The website finds the GitHub repository automatically
+        from the current GitHub Pages address.
+
+        Example:
+
+        https://username.github.io/mywebsite/
+
+        The script understands:
+
+        username  = username
+        mywebsite = repository
+
+        Then it searches the repository for:
+
+        wallpaper1.jpg
+        wallpaper2.jpg
+        wallpaper3.jpg
+        wallpaper4.jpg
+        wallpaper5.jpg
+        ...
+
+        You don't have to add each wallpaper manually.
+        =====================================================
+        */
+
+
+        const grid =
+            document.getElementById("wallpaper-grid");
+
+        const loading =
+            document.getElementById("loading");
+
+        const error =
+            document.getElementById("error");
+
+        const empty =
+            document.getElementById("empty");
+
+        const countText =
+            document.getElementById("wallpaper-count");
+
+
+        /*
+        -----------------------------------------------------
+        GET GITHUB INFORMATION
+        -----------------------------------------------------
+        */
+
+        function getGitHubInformation() {
+
+            const hostname =
+                window.location.hostname;
+
+            const pathname =
+                window.location.pathname;
+
+
+            /*
+            GitHub Pages usually looks like:
+
+            username.github.io
+
+            OR
+
+            username.github.io/repository/
+            */
+
+            if (
+                !hostname.endsWith(".github.io")
+            ) {
+
+                throw new Error(
+                    "This automatic system requires GitHub Pages."
+                );
+
+            }
+
+
+            const username =
+                hostname.split(".")[0];
+
+
+            const folders =
+                pathname
+                    .split("/")
+                    .filter(Boolean);
+
+
+            let repository;
+
+
+            if (
+                hostname ===
+                username + ".github.io"
+                &&
+                folders.length > 0
+            ) {
+
+                repository =
+                    folders[0];
+
+            } else {
+
+                /*
+                If the website itself is:
+
+                username.github.io
+
+                then the repository is normally:
+
+                username.github.io
+                */
+
+                repository =
+                    username + ".github.io";
+
+            }
+
+
+            return {
+                username,
+                repository
+            };
+
+        }
+
+
+        /*
+        -----------------------------------------------------
+        LOAD WALLPAPERS
+        -----------------------------------------------------
+        */
+
+        async function loadWallpapers() {
+
+            try {
+
+                const {
+                    username,
+                    repository
+                } = getGitHubInformation();
+
+
+                /*
+                GitHub API URL
+                */
+
+                const apiURL =
+                    `https://api.github.com/repos/${username}/${repository}/contents/`;
+
+
+                const response =
+                    await fetch(apiURL);
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "GitHub repository could not be accessed."
+                    );
+
+                }
+
+
+                const files =
+                    await response.json();
+
+
+                /*
+                -------------------------------------------------
+                FIND WALLPAPER FILES
+                -------------------------------------------------
+
+                Accepted:
+
+                wallpaper1.jpg
+                wallpaper2.jpeg
+                wallpaper3.png
+                wallpaper4.webp
+
+                Also accepts:
+
+                wallpaper 1.jpg
+
+                but numbered names are recommended.
+                -------------------------------------------------
+                */
+
+                const wallpapers =
+                    files.filter(file => {
+
+                        if (
+                            file.type !== "file"
+                        ) {
+                            return false;
+                        }
+
+
+                        const name =
+                            file.name.toLowerCase();
+
+
+                        return (
+                            /^wallpaper\s*\d+\.(jpg|jpeg|png|webp)$/i
+                        ).test(name);
+
+                    });
+
+
+                /*
+                -------------------------------------------------
+                SORT NUMERICALLY
+                -------------------------------------------------
+
+                This makes:
+
+                wallpaper2.jpg
+
+                appear before:
+
+                wallpaper10.jpg
+                -------------------------------------------------
+                */
+
+                wallpapers.sort(
+                    (a, b) => {
+
+                        const numberA =
+                            parseInt(
+                                a.name.match(/\d+/)[0]
+                            );
+
+                        const numberB =
+                            parseInt(
+                                b.name.match(/\d+/)[0]
+                            );
+
+                        return numberA - numberB;
+
+                    }
+                );
+
+
+                /*
+                -------------------------------------------------
+                HIDE LOADING
+                -------------------------------------------------
+                */
+
+                loading.style.display =
+                    "none";
+
+
+                /*
+                -------------------------------------------------
+                NO WALLPAPERS
+                -------------------------------------------------
+                */
+
+                if (
+                    wallpapers.length === 0
+                ) {
+
+                    empty.style.display =
+                        "block";
+
+                    countText.textContent =
+                        "0 wallpapers";
+
+                    return;
+
+                }
+
+
+                /*
+                -------------------------------------------------
+                UPDATE COUNT
+                -------------------------------------------------
+                */
+
+                countText.textContent =
+                    wallpapers.length === 1
+                        ? "1 wallpaper"
+                        : `${wallpapers.length} wallpapers`;
+
+
+                /*
+                -------------------------------------------------
+                CREATE CARDS
+                -------------------------------------------------
+                */
+
+                wallpapers.forEach(
+                    (file, index) => {
+
+                        const card =
+                            document.createElement("div");
+
+
+                        card.className =
+                            "wallpaper-card";
+
+
+                        card.style.animationDelay =
+                            `${index * 0.08}s`;
+
+
+                        const image =
+                            document.createElement("img");
+
+
+                        /*
+                        GitHub raw image
+                        */
+
+                        image.src =
+                            `https://raw.githubusercontent.com/${username}/${repository}/main/${encodeURIComponent(file.name)}`;
+
+
+                        image.alt =
+                            file.name;
+
+
+                        image.loading =
+                            index < 3
+                                ? "eager"
+                                : "lazy";
+
+
+                        image.decoding =
+                            "async";
+
+
+                        /*
+                        If an image fails,
+                        use GitHub's download URL.
+                        */
+
+                        image.onerror =
+                            function () {
+
+                                this.src =
+                                    file.download_url;
+
+                            };
+
+
+                        const info =
+                            document.createElement("div");
+
+
+                        info.className =
+                            "wallpaper-info";
+
+
+                        const title =
+                            document.createElement("h3");
+
+
+                        title.textContent =
+                            file.name
+                                .replace(
+                                    /\.(jpg|jpeg|png|webp)$/i,
+                                    ""
+                                )
+                                .replace(
+                                    /[-_]/g,
+                                    " "
+                                );
+
+
+                        const number =
+                            document.createElement("span");
+
+
+                        number.textContent =
+                            `Wallpaper ${index + 1}`;
+
+
+                        info.appendChild(title);
+
+                        info.appendChild(number);
+
+
+                        card.appendChild(image);
+
+                        card.appendChild(info);
+
+
+                        grid.appendChild(card);
+
+                    }
+                );
+
+
+            }
+
+            catch (err) {
+
+                console.error(
+                    "Library error:",
+                    err
+                );
+
+
+                loading.style.display =
+                    "none";
+
+
+                error.style.display =
+                    "block";
+
+
+                countText.textContent =
+                    "Unable to load wallpapers.";
+
+            }
+
+        }
+
+
+        /*
+        -----------------------------------------------------
+        START
+        -----------------------------------------------------
+        */
+
+        loadWallpapers();
+
+    </script>
+
+</body>
+
+</html>
         /* =========================
            NAVIGATION
         ========================= */
