@@ -1,19 +1,12 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Library | My Website</title>
+    <title>Library</title>
 
     <style>
-
-        /* =========================
-           BASIC RESET
-        ========================= */
-
         * {
             margin: 0;
             padding: 0;
@@ -25,548 +18,722 @@
         }
 
         body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            background: #050505;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0b0b0f;
             color: white;
-            overflow-x: hidden;
-            width: 100%;
+            min-height: 100vh;
         }
 
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background: rgba(11, 11, 15, 0.88);
+            backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ddd;
+            text-decoration: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: white;
+        }
 
         /* =========================
            HEADER
         ========================= */
 
-        header {
-            width: 100%;
-            height: 70px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 7%;
-
-            background: rgba(5, 5, 5, 0.88);
-
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-
-        .logo {
-            font-size: 23px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
-
-
-        nav a {
-            position: relative;
-
-            color: #aaa;
-
-            text-decoration: none;
-
-            font-size: 15px;
-
-            transition: 0.3s ease;
-        }
-
-
-        nav a:hover {
-            color: white;
-        }
-
-
-        nav a.active {
-            color: white;
-        }
-
-
-        nav a.active::after {
-            content: "";
-
-            position: absolute;
-
-            left: 0;
-            right: 0;
-
-            bottom: -9px;
-
-            height: 2px;
-
-            background: white;
-
-            border-radius: 10px;
-        }
-
-
-        /* =========================
-           HERO
-        ========================= */
-
-        .hero {
-            width: 100%;
-
-            min-height: 45vh;
-
-            display: flex;
-            flex-direction: column;
-
-            justify-content: center;
-            align-items: center;
-
+        .library-header {
             text-align: center;
-
-            padding: 80px 20px 60px;
+            padding: 70px 20px 45px;
         }
 
-
-        .hero h1 {
-            font-size: clamp(50px, 8vw, 85px);
-
-            line-height: 1;
-
-            letter-spacing: -3px;
-
-            margin-bottom: 22px;
-
-            background: linear-gradient(
-                120deg,
-                #ffffff,
-                #777777
-            );
-
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .library-header h1 {
+            font-size: clamp(36px, 6vw, 64px);
+            margin-bottom: 15px;
         }
 
-
-        .hero p {
-            max-width: 650px;
-
-            color: #888;
-
-            font-size: 17px;
-
-            line-height: 1.7;
+        .library-header p {
+            color: #aaa;
+            font-size: 16px;
+            max-width: 600px;
+            margin: auto;
+            line-height: 1.6;
         }
-
 
         /* =========================
-           LIBRARY AREA
+           GALLERY
         ========================= */
 
-        .library {
+        .gallery {
             width: 90%;
             max-width: 1400px;
-
-            margin: 0 auto;
-
-            padding-bottom: 100px;
-        }
-
-
-        .section-heading {
-            margin-bottom: 30px;
-        }
-
-
-        .section-heading h2 {
-            font-size: 30px;
-            font-weight: 600;
-        }
-
-
-        /* =========================
-           WALLPAPER GRID
-        ========================= */
-
-        .wallpaper-grid {
-            width: 100%;
+            margin: auto;
+            padding-bottom: 80px;
 
             display: grid;
-
-            grid-template-columns:
-                repeat(3, minmax(0, 1fr));
-
-            gap: 26px;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 20px;
         }
 
-
-        /* =========================
-           WALLPAPER CARD
-        ========================= */
-
-        .wallpaper {
-            width: 100%;
-
+        .photo {
+            position: relative;
             overflow: hidden;
 
-            border-radius: 20px;
+            aspect-ratio: 16 / 10;
 
-            background: #0c0c0c;
+            border-radius: 16px;
 
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #15151b;
+
+            cursor: pointer;
 
             opacity: 0;
+            transform: translateY(20px);
 
-            transform: translateY(35px);
-
-            animation: appear 0.7s ease forwards;
-
-            transition:
-                transform 0.35s ease,
-                border-color 0.35s ease,
-                box-shadow 0.35s ease;
+            animation: appear 0.6s ease forwards;
         }
-
-
-        .wallpaper:nth-child(1) {
-            animation-delay: 0.05s;
-        }
-
-        .wallpaper:nth-child(2) {
-            animation-delay: 0.12s;
-        }
-
-        .wallpaper:nth-child(3) {
-            animation-delay: 0.19s;
-        }
-
-        .wallpaper:nth-child(4) {
-            animation-delay: 0.26s;
-        }
-
-        .wallpaper:nth-child(5) {
-            animation-delay: 0.33s;
-        }
-
-
-        .wallpaper:hover {
-            transform: translateY(-7px);
-
-            border-color:
-                rgba(255, 255, 255, 0.22);
-
-            box-shadow:
-                0 25px 60px rgba(0, 0, 0, 0.55);
-        }
-
-
-        /* =========================
-           IMAGE
-        ========================= */
-
-        .wallpaper img {
-            display: block;
-
-            width: 100%;
-
-            height: 380px;
-
-            object-fit: cover;
-
-            transition:
-                transform 0.7s ease;
-        }
-
-
-        .wallpaper:hover img {
-            transform: scale(1.05);
-        }
-
-
-        /* =========================
-           ANIMATION
-        ========================= */
 
         @keyframes appear {
-
-            from {
-                opacity: 0;
-                transform: translateY(35px);
-            }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
-
         }
 
-
-        /* =========================
-           FOOTER
-        ========================= */
-
-        footer {
+        .photo img {
             width: 100%;
+            height: 100%;
 
-            text-align: center;
+            display: block;
 
-            padding: 45px 20px;
+            object-fit: cover;
 
-            color: #555;
-
-            font-size: 14px;
-
-            border-top:
-                1px solid rgba(255, 255, 255, 0.06);
+            transition: transform 0.5s ease;
         }
 
+        .photo:hover img {
+            transform: scale(1.06);
+        }
+
+        .photo::after {
+            content: "View";
+
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(0,0,0,0.35);
+
+            opacity: 0;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .photo:hover::after {
+            opacity: 1;
+        }
 
         /* =========================
-           TABLET
+           PREVIEW
         ========================= */
 
-        @media (max-width: 950px) {
+        .preview {
+            position: fixed;
+            inset: 0;
 
-            .wallpaper-grid {
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
+            z-index: 2000;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+
+            background: rgba(0,0,0,0.92);
+
+            backdrop-filter: blur(10px);
+        }
+
+        .preview.show {
+            display: flex;
+        }
+
+        .preview-image {
+            max-width: 90vw;
+            max-height: 82vh;
+
+            object-fit: contain;
+
+            border-radius: 10px;
+
+            box-shadow: 0 20px 80px rgba(0,0,0,0.7);
+
+            animation: previewIn 0.25s ease;
+        }
+
+        @keyframes previewIn {
+            from {
+                opacity: 0;
+                transform: scale(0.94);
             }
 
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
+        /* =========================
+           CLOSE BUTTON
+        ========================= */
+
+        .close-preview {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+
+            width: 45px;
+            height: 45px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.12);
+            color: white;
+
+            font-size: 25px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .close-preview:hover {
+            background: rgba(255,255,255,0.25);
+            transform: rotate(90deg);
+        }
+
+        /* =========================
+           PREVIEW BUTTONS
+        ========================= */
+
+        .preview-controls {
+            position: absolute;
+
+            bottom: 30px;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .control-btn {
+            border: none;
+
+            padding: 12px 20px;
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,0.12);
+            color: white;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .control-btn:hover {
+            background: rgba(255,255,255,0.22);
+            transform: translateY(-2px);
+        }
+
+        .download-btn {
+            background: white;
+            color: black;
+            font-weight: bold;
+        }
+
+        .download-btn:hover {
+            background: #eaeaea;
+        }
+
+        /* =========================
+           EMPTY MESSAGE
+        ========================= */
+
+        .empty {
+            text-align: center;
+            color: #888;
+            padding: 80px 20px;
+            font-size: 18px;
+        }
 
         /* =========================
            MOBILE
         ========================= */
 
-        @media (max-width: 600px) {
-
-            header {
-                padding: 0 5%;
-            }
-
-
-            .logo {
-                font-size: 20px;
-            }
-
+        @media (max-width: 700px) {
 
             nav {
-                gap: 17px;
+                padding: 0 20px;
             }
 
+            .logo {
+                font-size: 18px;
+            }
 
-            nav a {
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
                 font-size: 13px;
             }
 
-
-            .hero {
-                min-height: 40vh;
-
-                padding:
-                    70px 20px
-                    50px;
+            .library-header {
+                padding: 50px 20px 35px;
             }
 
-
-            .hero h1 {
-                font-size: 52px;
-
-                letter-spacing: -1px;
-            }
-
-
-            .hero p {
-                font-size: 15px;
-            }
-
-
-            .library {
+            .gallery {
                 width: 92%;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
 
-
-            .wallpaper-grid {
-                grid-template-columns: 1fr;
-
-                gap: 20px;
+            .photo {
+                border-radius: 10px;
             }
 
-
-            .wallpaper img {
-                height: 360px;
+            .preview {
+                padding: 15px;
             }
 
+            .preview-image {
+                max-width: 96vw;
+                max-height: 75vh;
+            }
+
+            .preview-controls {
+                bottom: 18px;
+            }
+
+            .control-btn {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+
+            .close-preview {
+                top: 15px;
+                right: 15px;
+            }
         }
-
     </style>
-
 </head>
 
-
 <body>
+
+    <!-- =========================
+         NAVIGATION
+    ========================= -->
+
+    <nav>
+
+        <div class="logo">
+            My Website
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="library.html" class="active">
+                    Library
+                </a>
+            </li>
+
+            <li>
+                <a href="about.html">
+                    About
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
 
 
     <!-- =========================
          HEADER
     ========================= -->
 
-    <header>
+    <header class="library-header">
 
-        <div class="logo">
-            My Website
-        </div>
+        <h1>Photo Library</h1>
 
-
-        <nav>
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="library.html" class="active">
-                Library
-            </a>
-
-            <a href="about.html">
-                About
-            </a>
-
-        </nav>
+        <p>
+            Explore the collection and open any photo
+            to view it in full size or download it.
+        </p>
 
     </header>
 
 
-
     <!-- =========================
-         HERO
+         PHOTO GRID
+         
+         IMPORTANT:
+         Put your images inside:
+         
+         images/
+         
+         Example:
+         images/photo1.jpg
+         images/photo2.jpg
+         images/photo3.jpg
     ========================= -->
 
-    <section class="hero">
+    <main class="gallery" id="gallery">
 
-        <h1>
-            Library
-        </h1>
-
-
-        <p>
-            Explore the collection.
-        </p>
-
-    </section>
-
-
-
-    <!-- =========================
-         WALLPAPERS
-    ========================= -->
-
-    <main class="library">
-
-        <div class="section-heading">
-
-            <h2>
-                Collection
-            </h2>
-
+        <div class="photo">
+            <img
+                src="images/photo1.jpg"
+                loading="lazy"
+                alt="Photo"
+            >
         </div>
 
+        <div class="photo">
+            <img
+                src="images/photo2.jpg"
+                loading="lazy"
+                alt="Photo"
+            >
+        </div>
 
-        <div class="wallpaper-grid">
+        <div class="photo">
+            <img
+                src="images/photo3.jpg"
+                loading="lazy"
+                alt="Photo"
+            >
+        </div>
 
+        <div class="photo">
+            <img
+                src="images/photo4.jpg"
+                loading="lazy"
+                alt="Photo"
+            >
+        </div>
 
-            <!-- IMAGE 1 -->
+        <div class="photo">
+            <img
+                src="images/photo5.jpg"
+                loading="lazy"
+                alt="Photo"
+            >
+        </div>
 
-            <div class="wallpaper">
-
-                <img
-                    src="wallpaper1.jpg"
-                    alt="Collection image"
-                    loading="lazy"
-                >
-
-            </div>
-
-
-            <!-- IMAGE 2 -->
-
-            <div class="wallpaper">
-
-                <img
-                    src="wallpaper2.jpg"
-                    alt="Collection image"
-                    loading="lazy"
-                >
-
-            </div>
-
-
-            <!-- IMAGE 3 -->
-
-            <div class="wallpaper">
-
-                <img
-                    src="wallpaper3.jpg"
-                    alt="Collection image"
-                    loading="lazy"
-                >
-
-            </div>
-
-
-            <!-- IMAGE 4 -->
-
-            <div class="wallpaper">
-
-                <img
-                    src="wallpaper4.jpg"
-                    alt="Collection image"
-                    loading="lazy"
-                >
-
-            </div>
-
-
-            <!-- IMAGE 5 -->
-
-            <div class="wallpaper">
-
-                <img
-                    src="wallpaper5.jpg"
-                    alt="Collection image"
-                    loading="lazy"
-                >
-
-            </div>
-
-
+        <div class="photo">
+            <img
+                src="images/photo6.jpg"
+                loading="lazy"
+                alt="Photo"
+            >
         </div>
 
     </main>
 
 
-
     <!-- =========================
-         FOOTER
+         PHOTO PREVIEW
     ========================= -->
 
-    <footer>
+    <div class="preview" id="preview">
 
-        © 2026 My Website
+        <button
+            class="close-preview"
+            id="closePreview"
+            aria-label="Close preview"
+        >
+            ×
+        </button>
 
-    </footer>
+        <img
+            class="preview-image"
+            id="previewImage"
+            src=""
+            alt="Preview"
+        >
 
+        <div class="preview-controls">
+
+            <button
+                class="control-btn"
+                id="previousBtn"
+            >
+                ←
+            </button>
+
+            <button
+                class="control-btn download-btn"
+                id="downloadBtn"
+            >
+                ↓ Download
+            </button>
+
+            <button
+                class="control-btn"
+                id="nextBtn"
+            >
+                →
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        const photos = document.querySelectorAll(".photo img");
+
+        const preview = document.getElementById("preview");
+
+        const previewImage =
+            document.getElementById("previewImage");
+
+        const closePreview =
+            document.getElementById("closePreview");
+
+        const downloadBtn =
+            document.getElementById("downloadBtn");
+
+        const previousBtn =
+            document.getElementById("previousBtn");
+
+        const nextBtn =
+            document.getElementById("nextBtn");
+
+
+        let currentIndex = 0;
+
+
+        /* =========================
+           OPEN PREVIEW
+        ========================= */
+
+        function openPreview(index) {
+
+            currentIndex = index;
+
+            previewImage.src =
+                photos[currentIndex].src;
+
+            preview.classList.add("show");
+
+            document.body.style.overflow = "hidden";
+        }
+
+
+        /* =========================
+           CLOSE PREVIEW
+        ========================= */
+
+        function closePreviewWindow() {
+
+            preview.classList.remove("show");
+
+            document.body.style.overflow = "";
+
+            previewImage.src = "";
+        }
+
+
+        /* =========================
+           NEXT PHOTO
+        ========================= */
+
+        function nextPhoto() {
+
+            currentIndex++;
+
+            if (currentIndex >= photos.length) {
+                currentIndex = 0;
+            }
+
+            previewImage.src =
+                photos[currentIndex].src;
+        }
+
+
+        /* =========================
+           PREVIOUS PHOTO
+        ========================= */
+
+        function previousPhoto() {
+
+            currentIndex--;
+
+            if (currentIndex < 0) {
+                currentIndex = photos.length - 1;
+            }
+
+            previewImage.src =
+                photos[currentIndex].src;
+        }
+
+
+        /* =========================
+           DOWNLOAD
+        ========================= */
+
+        function downloadPhoto() {
+
+            const imageURL =
+                photos[currentIndex].src;
+
+            const link =
+                document.createElement("a");
+
+            link.href = imageURL;
+
+            link.download =
+                imageURL.split("/").pop();
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.body.removeChild(link);
+        }
+
+
+        /* =========================
+           CLICK EVENTS
+        ========================= */
+
+        photos.forEach((photo, index) => {
+
+            photo.parentElement.addEventListener(
+                "click",
+                () => openPreview(index)
+            );
+
+        });
+
+
+        closePreview.addEventListener(
+            "click",
+            closePreviewWindow
+        );
+
+
+        nextBtn.addEventListener(
+            "click",
+            nextPhoto
+        );
+
+
+        previousBtn.addEventListener(
+            "click",
+            previousPhoto
+        );
+
+
+        downloadBtn.addEventListener(
+            "click",
+            downloadPhoto
+        );
+
+
+        /* =========================
+           CLICK OUTSIDE IMAGE
+        ========================= */
+
+        preview.addEventListener("click", (event) => {
+
+            if (event.target === preview) {
+                closePreviewWindow();
+            }
+
+        });
+
+
+        /* =========================
+           KEYBOARD CONTROLS
+        ========================= */
+
+        document.addEventListener("keydown", (event) => {
+
+            if (!preview.classList.contains("show")) {
+                return;
+            }
+
+            if (event.key === "Escape") {
+                closePreviewWindow();
+            }
+
+            if (event.key === "ArrowRight") {
+                nextPhoto();
+            }
+
+            if (event.key === "ArrowLeft") {
+                previousPhoto();
+            }
+
+        });
+
+    </script>
 
 </body>
-
 </html>
