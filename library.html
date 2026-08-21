@@ -7,6 +7,7 @@
     <title>Photo Library</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -24,7 +25,10 @@
             overflow-x: hidden;
         }
 
-        /* NAVIGATION */
+
+        /* =========================
+           NAVIGATION
+        ========================= */
 
         nav {
             position: fixed;
@@ -35,6 +39,7 @@
             padding: 20px 50px;
 
             background: rgba(10, 10, 10, 0.75);
+
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
 
@@ -51,20 +56,27 @@
 
         nav h2 {
             color: #ffffff;
+
             font-weight: 700;
+
             letter-spacing: 1px;
         }
 
         nav ul {
             display: flex;
+
             gap: 30px;
+
             list-style: none;
         }
 
         nav a {
             text-decoration: none;
+
             color: #cfcfcf;
+
             font-weight: 500;
+
             transition: 0.3s;
         }
 
@@ -72,7 +84,10 @@
             color: #ffffff;
         }
 
-        /* LIBRARY */
+
+        /* =========================
+           LIBRARY
+        ========================= */
 
         .library {
             min-height: 100vh;
@@ -93,6 +108,7 @@
                 #050505;
         }
 
+
         /* TITLE */
 
         .library h1 {
@@ -109,7 +125,10 @@
             animation: titleAppear 1s ease;
         }
 
-        /* PHOTO GRID */
+
+        /* =========================
+           PHOTO GRID
+        ========================= */
 
         .photos {
             display: grid;
@@ -124,7 +143,10 @@
             margin: auto;
         }
 
-        /* PHOTO CARD */
+
+        /* =========================
+           PHOTO CARD
+        ========================= */
 
         .photo {
             background: rgba(255,255,255,0.06);
@@ -154,22 +176,28 @@
                 border-color 0.5s ease;
         }
 
+
         /* HOVER */
 
         .photo:hover {
-            transform: translateY(-12px) scale(1.03);
+            transform: translateY(-10px) scale(1.02);
 
-            border-color: rgba(255,255,255,0.25);
+            border-color:
+                rgba(255,255,255,0.25);
 
             box-shadow:
                 0 25px 60px rgba(0,0,0,0.7),
                 inset 0 1px 1px rgba(255,255,255,0.08);
         }
 
-        /* IMAGE */
+
+        /* =========================
+           PHOTO
+        ========================= */
 
         .photo img {
             width: 100%;
+
             height: 250px;
 
             object-fit: cover;
@@ -178,34 +206,261 @@
 
             display: block;
 
+            cursor: pointer;
+
             transition:
-                transform 0.7s ease,
-                filter 0.5s ease;
+                transform 0.6s ease,
+                filter 0.4s ease;
         }
 
         .photo:hover img {
-            transform: scale(1.08);
-            filter: brightness(1.1);
+            transform: scale(1.05);
+
+            filter: brightness(1.08);
         }
 
-        /* PHOTO TITLE */
+
+        /* =========================
+           PHOTO TITLE
+        ========================= */
 
         .photo h3 {
-            margin-top: 18px;
-            margin-bottom: 5px;
+            margin-top: 17px;
+
+            margin-bottom: 10px;
 
             text-align: center;
 
-            font-size: 19px;
+            font-size: 18px;
 
             color: #ffffff;
 
             font-weight: 600;
         }
 
-        /* ANIMATIONS */
+
+        /* =========================
+           SMALL DOWNLOAD BUTTON
+        ========================= */
+
+        .download-button {
+            display: block;
+
+            width: fit-content;
+
+            margin: 8px auto 3px;
+
+            padding: 7px 13px;
+
+            border-radius: 8px;
+
+            background: rgba(255,255,255,0.07);
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            color: #bdbdbd;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 500;
+
+            transition: 0.3s;
+        }
+
+        .download-button:hover {
+            color: #ffffff;
+
+            background: rgba(255,255,255,0.13);
+
+            border-color:
+                rgba(255,255,255,0.25);
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           POPUP BACKGROUND
+        ========================= */
+
+        .modal {
+            position: fixed;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background: rgba(0,0,0,0.88);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition:
+                opacity 0.3s ease,
+                visibility 0.3s ease;
+
+            z-index: 2000;
+        }
+
+
+        /* SHOW POPUP */
+
+        .modal.active {
+            opacity: 1;
+
+            visibility: visible;
+        }
+
+
+        /* =========================
+           POPUP CONTENT
+        ========================= */
+
+        .modal-content {
+            position: relative;
+
+            max-width: 90vw;
+            max-height: 90vh;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            animation: popupIn 0.35s ease;
+        }
+
+
+        /* POPUP IMAGE */
+
+        .modal-content img {
+            max-width: 90vw;
+
+            max-height: 82vh;
+
+            object-fit: contain;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 20px 80px rgba(0,0,0,0.8);
+
+            user-select: none;
+        }
+
+
+        /* =========================
+           CLOSE BUTTON
+        ========================= */
+
+        .close-button {
+            position: fixed;
+
+            top: 25px;
+            right: 30px;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            border: 1px solid
+                rgba(255,255,255,0.18);
+
+            background:
+                rgba(255,255,255,0.08);
+
+            color: white;
+
+            font-size: 25px;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            transition: 0.3s;
+
+            z-index: 2100;
+        }
+
+        .close-button:hover {
+            background:
+                rgba(255,255,255,0.18);
+
+            transform: rotate(90deg);
+        }
+
+
+        /* =========================
+           POPUP DOWNLOAD
+        ========================= */
+
+        .modal-download {
+            position: fixed;
+
+            bottom: 30px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            padding: 9px 17px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,0.10);
+
+            border: 1px solid
+                rgba(255,255,255,0.18);
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 500;
+
+            backdrop-filter: blur(10px);
+
+            transition: 0.3s;
+
+            z-index: 2100;
+        }
+
+        .modal-download:hover {
+            background:
+                rgba(255,255,255,0.18);
+
+            transform:
+                translateX(-50%)
+                translateY(-3px);
+        }
+
+
+        /* =========================
+           ANIMATIONS
+        ========================= */
 
         @keyframes navDown {
+
             from {
                 transform: translateY(-100%);
                 opacity: 0;
@@ -215,33 +470,72 @@
                 transform: translateY(0);
                 opacity: 1;
             }
+
         }
+
 
         @keyframes titleAppear {
+
             from {
                 opacity: 0;
-                transform: translateY(-40px);
+
+                transform:
+                    translateY(-40px);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+
+                transform:
+                    translateY(0);
             }
+
         }
+
 
         @keyframes photoAppear {
+
             from {
                 opacity: 0;
-                transform: translateY(70px) scale(0.9);
+
+                transform:
+                    translateY(70px)
+                    scale(0.9);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+
+                transform:
+                    translateY(0)
+                    scale(1);
             }
+
         }
 
-        /* MOBILE */
+
+        @keyframes popupIn {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    scale(1);
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 700px) {
 
@@ -258,7 +552,8 @@
             }
 
             .library {
-                padding: 120px 20px 70px;
+                padding:
+                    120px 20px 70px;
             }
 
             .library h1 {
@@ -268,14 +563,29 @@
             .photo img {
                 height: 220px;
             }
+
+            .modal {
+                padding: 15px;
+            }
+
+            .modal-content img {
+                max-width: 95vw;
+
+                max-height: 80vh;
+            }
+
         }
 
     </style>
 </head>
 
+
 <body>
 
-    <!-- NAVIGATION -->
+
+    <!-- =========================
+         NAVIGATION
+    ========================= -->
 
     <nav>
 
@@ -284,15 +594,21 @@
         <ul>
 
             <li>
-                <a href="index.html">Home</a>
+                <a href="index.html">
+                    Home
+                </a>
             </li>
 
             <li>
-                <a href="library.html">Library</a>
+                <a href="library.html">
+                    Library
+                </a>
             </li>
 
             <li>
-                <a href="about.html">About</a>
+                <a href="about.html">
+                    About
+                </a>
             </li>
 
         </ul>
@@ -300,82 +616,332 @@
     </nav>
 
 
-    <!-- PHOTO LIBRARY -->
+
+    <!-- =========================
+         PHOTO LIBRARY
+    ========================= -->
 
     <section class="library">
 
-        <h1>Photo Library</h1>
+        <h1>
+            Photo Library
+        </h1>
 
-        <div class="photos" id="photoContainer"></div>
+
+        <div
+            class="photos"
+            id="photoContainer">
+        </div>
 
     </section>
 
 
-    <!-- PHOTO SYSTEM -->
+
+    <!-- =========================
+         PHOTO POPUP
+    ========================= -->
+
+    <div
+        class="modal"
+        id="photoModal">
+
+
+        <!-- CLOSE -->
+
+        <button
+            class="close-button"
+            id="closeButton">
+
+            ×
+
+        </button>
+
+
+        <!-- IMAGE -->
+
+        <div class="modal-content">
+
+            <img
+                id="modalImage"
+                src=""
+                alt="Photo Preview">
+
+        </div>
+
+
+        <!-- DOWNLOAD -->
+
+        <a
+            id="modalDownload"
+            class="modal-download"
+            href=""
+            download>
+
+            ↓ Download
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
 
     <script>
 
+
         /*
-         * ==========================================
+         * =====================================
          * ADD YOUR PHOTOS HERE
-         * ==========================================
+         * =====================================
          *
-         * Put your picture inside the "images" folder.
+         * Your photos are currently directly
+         * in the main GitHub repository.
          *
-         * Then add ONLY the filename here.
+         * Example:
          *
+         * wallpaper5.jpg
+         *
+         * Add its filename below.
          */
 
         const photos = [
-    "wallpaper1.jpg",
-    "wallpaper2.jpg",
-    "wallpaper3.jpg",
-    "wallpaper4.jpg"
-];
+
+            "wallpaper1.jpg",
+            "wallpaper2.jpg",
+            "wallpaper3.jpg",
+            "wallpaper4.jpg"
+
+        ];
+
 
 
         /*
-         * ==========================================
-         * AUTOMATIC PHOTO CREATION
-         * ==========================================
+         * =====================================
+         * PHOTO CONTAINER
+         * =====================================
          */
 
         const container =
-            document.getElementById("photoContainer");
+            document.getElementById(
+                "photoContainer"
+            );
 
+
+
+        /*
+         * =====================================
+         * POPUP ELEMENTS
+         * =====================================
+         */
+
+        const modal =
+            document.getElementById(
+                "photoModal"
+            );
+
+        const modalImage =
+            document.getElementById(
+                "modalImage"
+            );
+
+        const modalDownload =
+            document.getElementById(
+                "modalDownload"
+            );
+
+        const closeButton =
+            document.getElementById(
+                "closeButton"
+            );
+
+
+
+        /*
+         * =====================================
+         * CREATE PHOTO CARDS
+         * =====================================
+         */
 
         photos.forEach((photo, index) => {
 
-            const card = document.createElement("div");
+
+            /* CREATE CARD */
+
+            const card =
+                document.createElement(
+                    "div"
+                );
 
             card.className = "photo";
 
-            card.style.animationDelay =
-                (index * 0.2) + "s";
 
+            /* ANIMATION DELAY */
+
+            card.style.animationDelay =
+                (index * 0.15) + "s";
+
+
+            /* CREATE IMAGE */
 
             const image =
-                document.createElement("img");
+                document.createElement(
+                    "img"
+                );
 
-            image.src =  photo;
+            /*
+             * IMPORTANT:
+             * Photos are in the same folder
+             * as library.html.
+             */
 
-            image.alt = "Photo " + (index + 1);
+            image.src = photo;
 
+            image.alt =
+                "Photo " + (index + 1);
+
+
+            /* =========================
+               CLICK IMAGE → POPUP
+            ========================= */
+
+            image.addEventListener(
+                "click",
+                function() {
+
+                    modalImage.src = photo;
+
+                    modalDownload.href = photo;
+
+                    modal.classList.add(
+                        "active"
+                    );
+
+                    document.body.style.overflow =
+                        "hidden";
+
+                }
+            );
+
+
+            /* CREATE TITLE */
 
             const title =
-                document.createElement("h3");
+                document.createElement(
+                    "h3"
+                );
 
             title.textContent =
                 "Photo " + (index + 1);
 
 
+            /* =========================
+               SMALL DOWNLOAD BUTTON
+            ========================= */
+
+            const download =
+                document.createElement(
+                    "a"
+                );
+
+            download.textContent =
+                "↓ Download";
+
+
+            download.href =
+                photo;
+
+
+            download.download =
+                photo;
+
+
+            download.className =
+                "download-button";
+
+
+            /* ADD ELEMENTS */
+
             card.appendChild(image);
 
             card.appendChild(title);
 
+            card.appendChild(download);
+
             container.appendChild(card);
 
         });
+
+
+
+        /*
+         * =====================================
+         * CLOSE POPUP
+         * =====================================
+         */
+
+        function closeModal() {
+
+            modal.classList.remove(
+                "active"
+            );
+
+            document.body.style.overflow =
+                "";
+
+        }
+
+
+        closeButton.addEventListener(
+            "click",
+            closeModal
+        );
+
+
+
+        /*
+         * CLICK OUTSIDE IMAGE
+         * TO CLOSE
+         */
+
+        modal.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === modal
+                ) {
+
+                    closeModal();
+
+                }
+
+            }
+        );
+
+
+
+        /*
+         * ESC KEY CLOSES POPUP
+         */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeModal();
+
+                }
+
+            }
+        );
+
 
     </script>
 
