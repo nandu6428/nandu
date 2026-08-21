@@ -34,8 +34,8 @@
             position: fixed;
             top: 0;
             left: 0;
-
             width: 100%;
+
             padding: 20px 50px;
 
             background: rgba(10, 10, 10, 0.75);
@@ -56,27 +56,20 @@
 
         nav h2 {
             color: #ffffff;
-
             font-weight: 700;
-
             letter-spacing: 1px;
         }
 
         nav ul {
             display: flex;
-
             gap: 30px;
-
             list-style: none;
         }
 
         nav a {
             text-decoration: none;
-
             color: #cfcfcf;
-
             font-weight: 500;
-
             transition: 0.3s;
         }
 
@@ -176,9 +169,6 @@
                 border-color 0.5s ease;
         }
 
-
-        /* HOVER */
-
         .photo:hover {
             transform: translateY(-10px) scale(1.02);
 
@@ -186,13 +176,12 @@
                 rgba(255,255,255,0.25);
 
             box-shadow:
-                0 25px 60px rgba(0,0,0,0.7),
-                inset 0 1px 1px rgba(255,255,255,0.08);
+                0 25px 60px rgba(0,0,0,0.7);
         }
 
 
         /* =========================
-           PHOTO
+           PHOTO IMAGE
         ========================= */
 
         .photo img {
@@ -226,7 +215,6 @@
 
         .photo h3 {
             margin-top: 17px;
-
             margin-bottom: 10px;
 
             text-align: center;
@@ -272,17 +260,14 @@
         .download-button:hover {
             color: #ffffff;
 
-            background: rgba(255,255,255,0.13);
-
-            border-color:
-                rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.14);
 
             transform: translateY(-2px);
         }
 
 
         /* =========================
-           POPUP BACKGROUND
+           POPUP
         ========================= */
 
         .modal {
@@ -316,18 +301,14 @@
             z-index: 2000;
         }
 
-
-        /* SHOW POPUP */
-
         .modal.active {
             opacity: 1;
-
             visibility: visible;
         }
 
 
         /* =========================
-           POPUP CONTENT
+           POPUP IMAGE
         ========================= */
 
         .modal-content {
@@ -344,9 +325,6 @@
             animation: popupIn 0.35s ease;
         }
 
-
-        /* POPUP IMAGE */
-
         .modal-content img {
             max-width: 90vw;
 
@@ -358,8 +336,6 @@
 
             box-shadow:
                 0 20px 80px rgba(0,0,0,0.8);
-
-            user-select: none;
         }
 
 
@@ -378,11 +354,9 @@
 
             border-radius: 50%;
 
-            border: 1px solid
-                rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.18);
 
-            background:
-                rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.08);
 
             color: white;
 
@@ -401,8 +375,7 @@
         }
 
         .close-button:hover {
-            background:
-                rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.18);
 
             transform: rotate(90deg);
         }
@@ -424,11 +397,9 @@
 
             border-radius: 9px;
 
-            background:
-                rgba(255,255,255,0.10);
+            background: rgba(255,255,255,0.10);
 
-            border: 1px solid
-                rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.18);
 
             color: white;
 
@@ -446,8 +417,7 @@
         }
 
         .modal-download:hover {
-            background:
-                rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.18);
 
             transform:
                 translateX(-50%)
@@ -473,31 +443,24 @@
 
         }
 
-
         @keyframes titleAppear {
 
             from {
                 opacity: 0;
-
-                transform:
-                    translateY(-40px);
+                transform: translateY(-40px);
             }
 
             to {
                 opacity: 1;
-
-                transform:
-                    translateY(0);
+                transform: translateY(0);
             }
 
         }
-
 
         @keyframes photoAppear {
 
             from {
                 opacity: 0;
-
                 transform:
                     translateY(70px)
                     scale(0.9);
@@ -505,7 +468,6 @@
 
             to {
                 opacity: 1;
-
                 transform:
                     translateY(0)
                     scale(1);
@@ -513,21 +475,16 @@
 
         }
 
-
         @keyframes popupIn {
 
             from {
                 opacity: 0;
-
-                transform:
-                    scale(0.9);
+                transform: scale(0.9);
             }
 
             to {
                 opacity: 1;
-
-                transform:
-                    scale(1);
+                transform: scale(1);
             }
 
         }
@@ -552,8 +509,7 @@
             }
 
             .library {
-                padding:
-                    120px 20px 70px;
+                padding: 120px 20px 70px;
             }
 
             .library h1 {
@@ -564,13 +520,8 @@
                 height: 220px;
             }
 
-            .modal {
-                padding: 15px;
-            }
-
             .modal-content img {
                 max-width: 95vw;
-
                 max-height: 80vh;
             }
 
@@ -583,9 +534,7 @@
 <body>
 
 
-    <!-- =========================
-         NAVIGATION
-    ========================= -->
+    <!-- NAVIGATION -->
 
     <nav>
 
@@ -594,21 +543,15 @@
         <ul>
 
             <li>
-                <a href="index.html">
-                    Home
-                </a>
+                <a href="index.html">Home</a>
             </li>
 
             <li>
-                <a href="library.html">
-                    Library
-                </a>
+                <a href="library.html">Library</a>
             </li>
 
             <li>
-                <a href="about.html">
-                    About
-                </a>
+                <a href="about.html">About</a>
             </li>
 
         </ul>
@@ -616,17 +559,11 @@
     </nav>
 
 
-
-    <!-- =========================
-         PHOTO LIBRARY
-    ========================= -->
+    <!-- PHOTO LIBRARY -->
 
     <section class="library">
 
-        <h1>
-            Photo Library
-        </h1>
-
+        <h1>Photo Library</h1>
 
         <div
             class="photos"
@@ -636,17 +573,11 @@
     </section>
 
 
-
-    <!-- =========================
-         PHOTO POPUP
-    ========================= -->
+    <!-- PHOTO POPUP -->
 
     <div
         class="modal"
         id="photoModal">
-
-
-        <!-- CLOSE -->
 
         <button
             class="close-button"
@@ -656,9 +587,6 @@
 
         </button>
 
-
-        <!-- IMAGE -->
-
         <div class="modal-content">
 
             <img
@@ -667,9 +595,6 @@
                 alt="Photo Preview">
 
         </div>
-
-
-        <!-- DOWNLOAD -->
 
         <a
             id="modalDownload"
@@ -684,45 +609,34 @@
     </div>
 
 
-
-    <!-- =========================
-         JAVASCRIPT
-    ========================= -->
+    <!-- JAVASCRIPT -->
 
     <script>
 
-
         /*
-         * =====================================
-         * ADD YOUR PHOTOS HERE
-         * =====================================
-         *
-         * Your photos are currently directly
-         * in the main GitHub repository.
-         *
-         * Example:
-         *
-         * wallpaper5.jpg
-         *
-         * Add its filename below.
-         */
+        ==========================================
+        ADD YOUR PHOTOS HERE
+        ==========================================
+
+        Your photos are inside the "images"
+        folder.
+
+        So we use:
+
+        images/filename.jpg
+        */
 
         const photos = [
 
-            "wallpaper1.jpg",
-            "wallpaper2.jpg",
-            "wallpaper3.jpg",
-            "wallpaper4.jpg"
+            "images/wallpaper1.jpg",
+            "images/wallpaper2.jpg",
+            "images/wallpaper3.jpg",
+            "images/wallpaper4.jpg"
 
         ];
 
 
-
-        /*
-         * =====================================
-         * PHOTO CONTAINER
-         * =====================================
-         */
+        /* PHOTO CONTAINER */
 
         const container =
             document.getElementById(
@@ -730,12 +644,7 @@
             );
 
 
-
-        /*
-         * =====================================
-         * POPUP ELEMENTS
-         * =====================================
-         */
+        /* POPUP ELEMENTS */
 
         const modal =
             document.getElementById(
@@ -758,17 +667,9 @@
             );
 
 
-
-        /*
-         * =====================================
-         * CREATE PHOTO CARDS
-         * =====================================
-         */
+        /* CREATE PHOTO CARDS */
 
         photos.forEach((photo, index) => {
-
-
-            /* CREATE CARD */
 
             const card =
                 document.createElement(
@@ -778,24 +679,18 @@
             card.className = "photo";
 
 
-            /* ANIMATION DELAY */
+            /* Animation */
 
             card.style.animationDelay =
                 (index * 0.15) + "s";
 
 
-            /* CREATE IMAGE */
+            /* IMAGE */
 
             const image =
                 document.createElement(
                     "img"
                 );
-
-            /*
-             * IMPORTANT:
-             * Photos are in the same folder
-             * as library.html.
-             */
 
             image.src = photo;
 
@@ -803,9 +698,7 @@
                 "Photo " + (index + 1);
 
 
-            /* =========================
-               CLICK IMAGE → POPUP
-            ========================= */
+            /* CLICK IMAGE */
 
             image.addEventListener(
                 "click",
@@ -826,7 +719,7 @@
             );
 
 
-            /* CREATE TITLE */
+            /* TITLE */
 
             const title =
                 document.createElement(
@@ -837,9 +730,7 @@
                 "Photo " + (index + 1);
 
 
-            /* =========================
-               SMALL DOWNLOAD BUTTON
-            ========================= */
+            /* DOWNLOAD */
 
             const download =
                 document.createElement(
@@ -849,20 +740,17 @@
             download.textContent =
                 "↓ Download";
 
-
             download.href =
                 photo;
 
-
             download.download =
                 photo;
-
 
             download.className =
                 "download-button";
 
 
-            /* ADD ELEMENTS */
+            /* ADD TO CARD */
 
             card.appendChild(image);
 
@@ -875,12 +763,7 @@
         });
 
 
-
-        /*
-         * =====================================
-         * CLOSE POPUP
-         * =====================================
-         */
+        /* CLOSE POPUP */
 
         function closeModal() {
 
@@ -900,11 +783,7 @@
         );
 
 
-
-        /*
-         * CLICK OUTSIDE IMAGE
-         * TO CLOSE
-         */
+        /* CLICK OUTSIDE */
 
         modal.addEventListener(
             "click",
@@ -922,10 +801,7 @@
         );
 
 
-
-        /*
-         * ESC KEY CLOSES POPUP
-         */
+        /* ESCAPE KEY */
 
         document.addEventListener(
             "keydown",
@@ -941,7 +817,6 @@
 
             }
         );
-
 
     </script>
 
