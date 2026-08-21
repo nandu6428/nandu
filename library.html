@@ -41,10 +41,8 @@
             align-items: center;
             justify-content: space-between;
 
-            background: rgba(11, 11, 15, 0.90);
-            backdrop-filter: blur(15px);
-
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(11, 11, 15, 0.96);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .logo {
@@ -61,14 +59,13 @@
         .nav-links a {
             color: #aaa;
             text-decoration: none;
-            transition: 0.3s;
+            transition: color 0.2s ease;
         }
 
         .nav-links a:hover,
         .nav-links a.active {
             color: white;
         }
-
 
         /* =========================
            HEADER
@@ -87,12 +84,9 @@
         .header p {
             max-width: 650px;
             margin: auto;
-
             color: #999;
-
             line-height: 1.7;
         }
-
 
         /* =========================
            PHOTO GRID
@@ -101,19 +95,17 @@
         .gallery {
             width: 90%;
             max-width: 1400px;
-
             margin: auto;
 
             display: grid;
-
-            grid-template-columns:
-                repeat(auto-fill, minmax(230px, 1fr));
+            grid-template-columns: repeat(
+                auto-fill,
+                minmax(230px, 1fr)
+            );
 
             gap: 20px;
-
             padding-bottom: 80px;
         }
-
 
         /* =========================
            PHOTO CARD
@@ -121,38 +113,17 @@
 
         .photo {
             position: relative;
-
             overflow: hidden;
 
             aspect-ratio: 16 / 10;
 
             border-radius: 16px;
-
             background: #17171d;
 
             cursor: pointer;
 
-            opacity: 0;
-
-            transform: translateY(20px);
-
-            animation: photoAppear 0.6s ease forwards;
+            contain: layout paint;
         }
-
-        @keyframes photoAppear {
-
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-        }
-
 
         .photo img {
             width: 100%;
@@ -162,15 +133,25 @@
 
             object-fit: cover;
 
-            transition: transform 0.5s ease;
+            /* Important for loading performance */
+            opacity: 0;
+
+            transition:
+                opacity 0.25s ease,
+                transform 0.35s ease;
+        }
+
+        .photo img.loaded {
+            opacity: 1;
         }
 
         .photo:hover img {
-            transform: scale(1.06);
+            transform: scale(1.04);
         }
 
-
-        /* Preview overlay */
+        /* =========================
+           PREVIEW OVERLAY
+        ========================= */
 
         .photo::after {
             content: "Preview";
@@ -182,20 +163,21 @@
             align-items: center;
             justify-content: center;
 
-            background: rgba(0,0,0,0.35);
+            background: rgba(0, 0, 0, 0.35);
 
             opacity: 0;
 
             font-size: 16px;
             font-weight: bold;
 
-            transition: 0.3s;
+            transition: opacity 0.2s ease;
+
+            pointer-events: none;
         }
 
         .photo:hover::after {
             opacity: 1;
         }
-
 
         /* =========================
            FULL SCREEN PREVIEW
@@ -214,15 +196,12 @@
 
             padding: 30px;
 
-            background: rgba(0,0,0,0.94);
-
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.96);
         }
 
         .preview.active {
             display: flex;
         }
-
 
         .preview-image {
             max-width: 90vw;
@@ -233,25 +212,8 @@
             border-radius: 10px;
 
             box-shadow:
-                0 20px 80px rgba(0,0,0,0.8);
-
-            animation: previewOpen 0.25s ease;
+                0 20px 60px rgba(0, 0, 0, 0.7);
         }
-
-        @keyframes previewOpen {
-
-            from {
-                opacity: 0;
-                transform: scale(0.94);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-        }
-
 
         /* =========================
            CLOSE BUTTON
@@ -269,7 +231,7 @@
             border: none;
             border-radius: 50%;
 
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
 
             color: white;
 
@@ -277,15 +239,15 @@
 
             cursor: pointer;
 
-            transition: 0.3s;
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
         }
 
         .close:hover {
-            background: rgba(255,255,255,0.25);
-
+            background: rgba(255, 255, 255, 0.25);
             transform: rotate(90deg);
         }
-
 
         /* =========================
            CONTROLS
@@ -310,7 +272,7 @@
 
             border-radius: 10px;
 
-            background: rgba(255,255,255,0.13);
+            background: rgba(255, 255, 255, 0.13);
 
             color: white;
 
@@ -318,30 +280,29 @@
 
             cursor: pointer;
 
-            transition: 0.3s;
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
         }
 
         .control:hover {
-            background: rgba(255,255,255,0.25);
-
+            background: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
         }
 
-
-        /* DOWNLOAD */
+        /* =========================
+           DOWNLOAD
+        ========================= */
 
         .download {
             background: white;
-
             color: black;
-
             font-weight: bold;
         }
 
         .download:hover {
             background: #ddd;
         }
-
 
         /* =========================
            MOBILE
@@ -393,7 +354,6 @@
 
             .control {
                 padding: 10px 14px;
-
                 font-size: 13px;
             }
 
@@ -403,13 +363,30 @@
             }
         }
 
+        /* =========================
+           REDUCED MOTION
+        ========================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
     </style>
 
 </head>
 
 
 <body>
-
 
     <!-- =========================
          NAVIGATION
@@ -421,7 +398,6 @@
             Photo Library
         </div>
 
-
         <ul class="nav-links">
 
             <li>
@@ -431,9 +407,7 @@
             </li>
 
             <li>
-                <a
-                    href="library.html"
-                    class="active">
+                <a href="library.html" class="active">
                     Library
                 </a>
             </li>
@@ -447,7 +421,6 @@
         </ul>
 
     </nav>
-
 
 
     <!-- =========================
@@ -468,13 +441,8 @@
     </section>
 
 
-
     <!-- =========================
          PHOTO LIBRARY
-         
-         IMPORTANT:
-         These paths match your
-         actual GitHub files.
     ========================= -->
 
     <main class="gallery">
@@ -483,9 +451,11 @@
         <div class="photo">
 
             <img
-                src="wallpaper1.jpg"
-                loading="lazy"
-                alt="Wallpaper">
+                data-src="wallpaper1.jpg"
+                alt="Photo"
+                width="800"
+                height="500"
+                decoding="async">
 
         </div>
 
@@ -493,9 +463,11 @@
         <div class="photo">
 
             <img
-                src="wallpaper2.jpg"
-                loading="lazy"
-                alt="Wallpaper">
+                data-src="wallpaper2.jpg"
+                alt="Photo"
+                width="800"
+                height="500"
+                decoding="async">
 
         </div>
 
@@ -503,9 +475,11 @@
         <div class="photo">
 
             <img
-                src="wallpaper3.jpg"
-                loading="lazy"
-                alt="Wallpaper">
+                data-src="wallpaper3.jpg"
+                alt="Photo"
+                width="800"
+                height="500"
+                decoding="async">
 
         </div>
 
@@ -513,9 +487,11 @@
         <div class="photo">
 
             <img
-                src="wallpaper4.jpg"
-                loading="lazy"
-                alt="Wallpaper">
+                data-src="wallpaper4.jpg"
+                alt="Photo"
+                width="800"
+                height="500"
+                decoding="async">
 
         </div>
 
@@ -523,15 +499,16 @@
         <div class="photo">
 
             <img
-                src="wallpaper5.jpg"
-                loading="lazy"
-                alt="Wallpaper">
+                data-src="wallpaper5.jpg"
+                alt="Photo"
+                width="800"
+                height="500"
+                decoding="async">
 
         </div>
 
 
     </main>
-
 
 
     <!-- =========================
@@ -542,20 +519,15 @@
         class="preview"
         id="preview">
 
-
-        <!-- CLOSE -->
-
         <button
             class="close"
-            id="close">
+            id="close"
+            aria-label="Close preview">
 
             ×
 
         </button>
 
-
-
-        <!-- LARGE PHOTO -->
 
         <img
             class="preview-image"
@@ -564,20 +536,16 @@
             alt="Photo Preview">
 
 
-
-        <!-- CONTROLS -->
-
         <div class="controls">
-
 
             <button
                 class="control"
-                id="previous">
+                id="previous"
+                aria-label="Previous photo">
 
                 ←
 
             </button>
-
 
 
             <button
@@ -589,20 +557,18 @@
             </button>
 
 
-
             <button
                 class="control"
-                id="next">
+                id="next"
+                aria-label="Next photo">
 
                 →
 
             </button>
 
-
         </div>
 
     </div>
-
 
 
     <!-- =========================
@@ -611,51 +577,98 @@
 
     <script>
 
-
         const photos =
-            document.querySelectorAll(
-                ".photo img"
-            );
-
+            document.querySelectorAll(".photo img");
 
         const preview =
-            document.getElementById(
-                "preview"
-            );
-
+            document.getElementById("preview");
 
         const previewImage =
-            document.getElementById(
-                "previewImage"
-            );
-
+            document.getElementById("previewImage");
 
         const close =
-            document.getElementById(
-                "close"
-            );
-
+            document.getElementById("close");
 
         const previous =
-            document.getElementById(
-                "previous"
-            );
-
+            document.getElementById("previous");
 
         const next =
-            document.getElementById(
-                "next"
-            );
-
+            document.getElementById("next");
 
         const download =
-            document.getElementById(
-                "download"
-            );
-
+            document.getElementById("download");
 
         let currentPhoto = 0;
 
+
+        /* =========================
+           FAST LAZY LOADING
+        ========================= */
+
+        const imageObserver =
+            new IntersectionObserver(
+                function(entries, observer) {
+
+                    entries.forEach(function(entry) {
+
+                        if (!entry.isIntersecting) {
+                            return;
+                        }
+
+                        const image = entry.target;
+
+                        const source =
+                            image.dataset.src;
+
+                        if (source) {
+
+                            image.src = source;
+
+                            image.onload = function() {
+
+                                image.classList.add("loaded");
+
+                            };
+
+                            image.onerror = function() {
+
+                                image.classList.add("loaded");
+
+                            };
+
+                            delete image.dataset.src;
+
+                        }
+
+                        observer.unobserve(image);
+
+                    });
+
+                },
+                {
+                    rootMargin: "250px 0px",
+                    threshold: 0.01
+                }
+            );
+
+
+        photos.forEach(function(image) {
+
+            imageObserver.observe(image);
+
+        });
+
+
+        /* =========================
+           GET IMAGE SOURCE
+        ========================= */
+
+        function getImageSource(image) {
+
+            return image.src ||
+                   image.dataset.src;
+
+        }
 
 
         /* =========================
@@ -666,18 +679,18 @@
 
             currentPhoto = index;
 
-            previewImage.src =
-                photos[currentPhoto].src;
+            const source =
+                getImageSource(
+                    photos[currentPhoto]
+                );
 
-            preview.classList.add(
-                "active"
-            );
+            previewImage.src = source;
 
-            document.body.style.overflow =
-                "hidden";
+            preview.classList.add("active");
+
+            document.body.style.overflow = "hidden";
 
         }
-
 
 
         /* =========================
@@ -686,17 +699,13 @@
 
         function closePhoto() {
 
-            preview.classList.remove(
-                "active"
-            );
+            preview.classList.remove("active");
 
-            document.body.style.overflow =
-                "";
+            document.body.style.overflow = "";
 
             previewImage.src = "";
 
         }
-
 
 
         /* =========================
@@ -707,20 +716,18 @@
 
             currentPhoto++;
 
-            if (
-                currentPhoto >=
-                photos.length
-            ) {
+            if (currentPhoto >= photos.length) {
 
                 currentPhoto = 0;
 
             }
 
             previewImage.src =
-                photos[currentPhoto].src;
+                getImageSource(
+                    photos[currentPhoto]
+                );
 
         }
-
 
 
         /* =========================
@@ -731,9 +738,7 @@
 
             currentPhoto--;
 
-            if (
-                currentPhoto < 0
-            ) {
+            if (currentPhoto < 0) {
 
                 currentPhoto =
                     photos.length - 1;
@@ -741,14 +746,15 @@
             }
 
             previewImage.src =
-                photos[currentPhoto].src;
+                getImageSource(
+                    photos[currentPhoto]
+                );
 
         }
 
 
-
         /* =========================
-           DOWNLOAD PHOTO
+           DOWNLOAD
         ========================= */
 
         function downloadPhoto() {
@@ -756,37 +762,26 @@
             const image =
                 photos[currentPhoto];
 
+            const source =
+                getImageSource(image);
 
             const link =
-                document.createElement(
-                    "a"
-                );
+                document.createElement("a");
 
-
-            link.href =
-                image.src;
-
+            link.href = source;
 
             link.download =
-                image.src
+                source
                     .split("/")
                     .pop();
 
-
-            document.body.appendChild(
-                link
-            );
-
+            document.body.appendChild(link);
 
             link.click();
 
-
-            document.body.removeChild(
-                link
-            );
+            document.body.removeChild(link);
 
         }
-
 
 
         /* =========================
@@ -794,11 +789,11 @@
         ========================= */
 
         photos.forEach(
-            (photo, index) => {
+            function(photo, index) {
 
                 photo.parentElement.addEventListener(
                     "click",
-                    function () {
+                    function() {
 
                         openPhoto(index);
 
@@ -807,7 +802,6 @@
 
             }
         );
-
 
 
         /* =========================
@@ -819,18 +813,15 @@
             closePhoto
         );
 
-
         next.addEventListener(
             "click",
             showNext
         );
 
-
         previous.addEventListener(
             "click",
             showPrevious
         );
-
 
         download.addEventListener(
             "click",
@@ -838,19 +829,15 @@
         );
 
 
-
         /* =========================
-           CLOSE BACKGROUND
+           BACKGROUND CLOSE
         ========================= */
 
         preview.addEventListener(
             "click",
             function(event) {
 
-                if (
-                    event.target ===
-                    preview
-                ) {
+                if (event.target === preview) {
 
                     closePhoto();
 
@@ -858,7 +845,6 @@
 
             }
         );
-
 
 
         /* =========================
@@ -870,40 +856,26 @@
             function(event) {
 
                 if (
-                    !preview.classList.contains(
-                        "active"
-                    )
+                    !preview.classList.contains("active")
                 ) {
 
                     return;
 
                 }
 
-
-                if (
-                    event.key ===
-                    "Escape"
-                ) {
+                if (event.key === "Escape") {
 
                     closePhoto();
 
                 }
 
-
-                if (
-                    event.key ===
-                    "ArrowRight"
-                ) {
+                if (event.key === "ArrowRight") {
 
                     showNext();
 
                 }
 
-
-                if (
-                    event.key ===
-                    "ArrowLeft"
-                ) {
+                if (event.key === "ArrowLeft") {
 
                     showPrevious();
 
@@ -912,9 +884,7 @@
             }
         );
 
-
     </script>
-
 
 </body>
 
