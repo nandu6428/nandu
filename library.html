@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Library</title>
+    <title>Photo Library</title>
 
     <style>
         * {
@@ -20,8 +21,7 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             background: #0b0b0f;
-            color: white;
-            min-height: 100vh;
+            color: #fff;
         }
 
         /* =========================
@@ -34,22 +34,21 @@
             z-index: 1000;
 
             height: 70px;
+            padding: 0 6%;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding: 0 6%;
-
-            background: rgba(11, 11, 15, 0.88);
+            background: rgba(11, 11, 15, 0.9);
             backdrop-filter: blur(15px);
 
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .logo {
             font-size: 22px;
-            font-weight: bold;
-            letter-spacing: 1px;
+            font-weight: 700;
         }
 
         .nav-links {
@@ -59,37 +58,35 @@
         }
 
         .nav-links a {
-            color: #ddd;
+            color: #aaa;
             text-decoration: none;
-            font-size: 15px;
             transition: 0.3s;
         }
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: white;
+            color: #fff;
         }
 
         /* =========================
            HEADER
         ========================= */
 
-        .library-header {
+        .header {
             text-align: center;
             padding: 70px 20px 45px;
         }
 
-        .library-header h1 {
-            font-size: clamp(36px, 6vw, 64px);
+        .header h1 {
+            font-size: clamp(38px, 6vw, 65px);
             margin-bottom: 15px;
         }
 
-        .library-header p {
-            color: #aaa;
-            font-size: 16px;
-            max-width: 600px;
+        .header p {
+            max-width: 650px;
             margin: auto;
-            line-height: 1.6;
+            color: #999;
+            line-height: 1.7;
         }
 
         /* =========================
@@ -100,11 +97,13 @@
             width: 90%;
             max-width: 1400px;
             margin: auto;
-            padding-bottom: 80px;
 
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+
             gap: 20px;
+
+            padding-bottom: 80px;
         }
 
         .photo {
@@ -115,17 +114,19 @@
 
             border-radius: 16px;
 
-            background: #15151b;
+            background: #17171d;
 
             cursor: pointer;
 
-            opacity: 0;
-            transform: translateY(20px);
-
-            animation: appear 0.6s ease forwards;
+            animation: showPhoto 0.6s ease forwards;
         }
 
-        @keyframes appear {
+        @keyframes showPhoto {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -148,7 +149,7 @@
         }
 
         .photo::after {
-            content: "View";
+            content: "Preview";
 
             position: absolute;
             inset: 0;
@@ -157,7 +158,7 @@
             align-items: center;
             justify-content: center;
 
-            background: rgba(0,0,0,0.35);
+            background: rgba(0, 0, 0, 0.35);
 
             opacity: 0;
 
@@ -172,44 +173,42 @@
         }
 
         /* =========================
-           PREVIEW
+           FULL SCREEN PREVIEW
         ========================= */
 
         .preview {
             position: fixed;
             inset: 0;
 
-            z-index: 2000;
+            z-index: 5000;
 
             display: none;
             align-items: center;
             justify-content: center;
 
+            background: rgba(0, 0, 0, 0.94);
+
             padding: 30px;
-
-            background: rgba(0,0,0,0.92);
-
-            backdrop-filter: blur(10px);
         }
 
-        .preview.show {
+        .preview.active {
             display: flex;
         }
 
         .preview-image {
             max-width: 90vw;
-            max-height: 82vh;
+            max-height: 78vh;
 
             object-fit: contain;
 
             border-radius: 10px;
 
-            box-shadow: 0 20px 80px rgba(0,0,0,0.7);
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
 
-            animation: previewIn 0.25s ease;
+            animation: previewOpen 0.25s ease;
         }
 
-        @keyframes previewIn {
+        @keyframes previewOpen {
             from {
                 opacity: 0;
                 transform: scale(0.94);
@@ -222,57 +221,58 @@
         }
 
         /* =========================
-           CLOSE BUTTON
+           CLOSE
         ========================= */
 
-        .close-preview {
+        .close {
             position: absolute;
-            top: 25px;
-            right: 30px;
+            top: 22px;
+            right: 25px;
 
-            width: 45px;
-            height: 45px;
+            width: 48px;
+            height: 48px;
 
             border: none;
             border-radius: 50%;
 
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
+
             color: white;
 
-            font-size: 25px;
+            font-size: 28px;
 
             cursor: pointer;
 
             transition: 0.3s;
         }
 
-        .close-preview:hover {
-            background: rgba(255,255,255,0.25);
+        .close:hover {
+            background: rgba(255, 255, 255, 0.25);
             transform: rotate(90deg);
         }
 
         /* =========================
-           PREVIEW BUTTONS
+           PREVIEW CONTROLS
         ========================= */
 
-        .preview-controls {
+        .controls {
             position: absolute;
-
-            bottom: 30px;
+            bottom: 28px;
 
             display: flex;
-            align-items: center;
             gap: 12px;
+            align-items: center;
         }
 
-        .control-btn {
+        .control {
             border: none;
 
             padding: 12px 20px;
 
             border-radius: 10px;
 
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.13);
+
             color: white;
 
             font-size: 15px;
@@ -282,30 +282,19 @@
             transition: 0.3s;
         }
 
-        .control-btn:hover {
-            background: rgba(255,255,255,0.22);
+        .control:hover {
+            background: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
         }
 
-        .download-btn {
+        .download {
             background: white;
             color: black;
             font-weight: bold;
         }
 
-        .download-btn:hover {
-            background: #eaeaea;
-        }
-
-        /* =========================
-           EMPTY MESSAGE
-        ========================= */
-
-        .empty {
-            text-align: center;
-            color: #888;
-            padding: 80px 20px;
-            font-size: 18px;
+        .download:hover {
+            background: #ddd;
         }
 
         /* =========================
@@ -330,12 +319,12 @@
                 font-size: 13px;
             }
 
-            .library-header {
+            .header {
                 padding: 50px 20px 35px;
             }
 
             .gallery {
-                width: 92%;
+                width: 94%;
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
@@ -350,19 +339,15 @@
 
             .preview-image {
                 max-width: 96vw;
-                max-height: 75vh;
+                max-height: 74vh;
             }
 
-            .preview-controls {
-                bottom: 18px;
-            }
-
-            .control-btn {
+            .control {
                 padding: 10px 14px;
                 font-size: 13px;
             }
 
-            .close-preview {
+            .close {
                 top: 15px;
                 right: 15px;
             }
@@ -372,14 +357,12 @@
 
 <body>
 
-    <!-- =========================
-         NAVIGATION
-    ========================= -->
+    <!-- NAVIGATION -->
 
     <nav>
 
         <div class="logo">
-            My Website
+            Photo Library
         </div>
 
         <ul class="nav-links">
@@ -407,84 +390,71 @@
     </nav>
 
 
-    <!-- =========================
-         HEADER
-    ========================= -->
+    <!-- HEADER -->
 
-    <header class="library-header">
+    <section class="header">
 
         <h1>Photo Library</h1>
 
         <p>
-            Explore the collection and open any photo
-            to view it in full size or download it.
+            Explore the collection. Click any photo
+            to preview it and download the original.
         </p>
 
-    </header>
+    </section>
 
 
     <!-- =========================
-         PHOTO GRID
+         WALLPAPER LIBRARY
          
          IMPORTANT:
-         Put your images inside:
-         
-         images/
-         
-         Example:
-         images/photo1.jpg
-         images/photo2.jpg
-         images/photo3.jpg
+         Your wallpaper files should be
+         inside the "wallpapers" folder.
+
+         Change ONLY the filenames below
+         if your files have different names.
     ========================= -->
 
-    <main class="gallery" id="gallery">
+    <main class="gallery">
 
         <div class="photo">
-            <img
-                src="images/photo1.jpg"
-                loading="lazy"
-                alt="Photo"
-            >
+            <img src="wallpapers/1.jpg" loading="lazy" alt="Wallpaper">
         </div>
 
         <div class="photo">
-            <img
-                src="images/photo2.jpg"
-                loading="lazy"
-                alt="Photo"
-            >
+            <img src="wallpapers/2.jpg" loading="lazy" alt="Wallpaper">
         </div>
 
         <div class="photo">
-            <img
-                src="images/photo3.jpg"
-                loading="lazy"
-                alt="Photo"
-            >
+            <img src="wallpapers/3.jpg" loading="lazy" alt="Wallpaper">
         </div>
 
         <div class="photo">
-            <img
-                src="images/photo4.jpg"
-                loading="lazy"
-                alt="Photo"
-            >
+            <img src="wallpapers/4.jpg" loading="lazy" alt="Wallpaper">
         </div>
 
         <div class="photo">
-            <img
-                src="images/photo5.jpg"
-                loading="lazy"
-                alt="Photo"
-            >
+            <img src="wallpapers/5.jpg" loading="lazy" alt="Wallpaper">
         </div>
 
         <div class="photo">
-            <img
-                src="images/photo6.jpg"
-                loading="lazy"
-                alt="Photo"
-            >
+            <img src="wallpapers/6.jpg" loading="lazy" alt="Wallpaper">
+        </div>
+
+        <div class="photo">
+            <img src="wallpapers/7.jpg" loading="lazy" alt="Wallpaper">
+        </div>
+
+        <div class="photo">
+            <img src="wallpapers/8.jpg" loading="lazy" alt="Wallpaper">
+        </div>
+
+        <div class="photo">
+            <img src="wallpapers/9.jpg" loading="lazy" alt="Wallpaper">
+        </div>
+
+        <div class="photo">
+            <img src="wallpapers/10.jpg" loading="lazy" alt="Wallpaper">
         </div>
 
     </main>
@@ -496,11 +466,7 @@
 
     <div class="preview" id="preview">
 
-        <button
-            class="close-preview"
-            id="closePreview"
-            aria-label="Close preview"
-        >
+        <button class="close" id="close">
             ×
         </button>
 
@@ -508,29 +474,20 @@
             class="preview-image"
             id="previewImage"
             src=""
-            alt="Preview"
+            alt="Photo Preview"
         >
 
-        <div class="preview-controls">
+        <div class="controls">
 
-            <button
-                class="control-btn"
-                id="previousBtn"
-            >
+            <button class="control" id="previous">
                 ←
             </button>
 
-            <button
-                class="control-btn download-btn"
-                id="downloadBtn"
-            >
+            <button class="control download" id="download">
                 ↓ Download
             </button>
 
-            <button
-                class="control-btn"
-                id="nextBtn"
-            >
+            <button class="control" id="next">
                 →
             </button>
 
@@ -545,53 +502,51 @@
 
     <script>
 
-        const photos = document.querySelectorAll(".photo img");
+        const photos =
+            document.querySelectorAll(".photo img");
 
-        const preview = document.getElementById("preview");
+        const preview =
+            document.getElementById("preview");
 
         const previewImage =
             document.getElementById("previewImage");
 
-        const closePreview =
-            document.getElementById("closePreview");
+        const close =
+            document.getElementById("close");
 
-        const downloadBtn =
-            document.getElementById("downloadBtn");
+        const previous =
+            document.getElementById("previous");
 
-        const previousBtn =
-            document.getElementById("previousBtn");
+        const next =
+            document.getElementById("next");
 
-        const nextBtn =
-            document.getElementById("nextBtn");
-
-
-        let currentIndex = 0;
+        const download =
+            document.getElementById("download");
 
 
-        /* =========================
-           OPEN PREVIEW
-        ========================= */
+        let currentPhoto = 0;
 
-        function openPreview(index) {
 
-            currentIndex = index;
+        /* OPEN PHOTO */
+
+        function openPhoto(index) {
+
+            currentPhoto = index;
 
             previewImage.src =
-                photos[currentIndex].src;
+                photos[currentPhoto].src;
 
-            preview.classList.add("show");
+            preview.classList.add("active");
 
             document.body.style.overflow = "hidden";
         }
 
 
-        /* =========================
-           CLOSE PREVIEW
-        ========================= */
+        /* CLOSE PHOTO */
 
-        function closePreviewWindow() {
+        function closePhoto() {
 
-            preview.classList.remove("show");
+            preview.classList.remove("active");
 
             document.body.style.overflow = "";
 
@@ -599,56 +554,50 @@
         }
 
 
-        /* =========================
-           NEXT PHOTO
-        ========================= */
+        /* NEXT */
 
-        function nextPhoto() {
+        function showNext() {
 
-            currentIndex++;
+            currentPhoto++;
 
-            if (currentIndex >= photos.length) {
-                currentIndex = 0;
+            if (currentPhoto >= photos.length) {
+                currentPhoto = 0;
             }
 
             previewImage.src =
-                photos[currentIndex].src;
+                photos[currentPhoto].src;
         }
 
 
-        /* =========================
-           PREVIOUS PHOTO
-        ========================= */
+        /* PREVIOUS */
 
-        function previousPhoto() {
+        function showPrevious() {
 
-            currentIndex--;
+            currentPhoto--;
 
-            if (currentIndex < 0) {
-                currentIndex = photos.length - 1;
+            if (currentPhoto < 0) {
+                currentPhoto = photos.length - 1;
             }
 
             previewImage.src =
-                photos[currentIndex].src;
+                photos[currentPhoto].src;
         }
 
 
-        /* =========================
-           DOWNLOAD
-        ========================= */
+        /* DOWNLOAD */
 
         function downloadPhoto() {
 
-            const imageURL =
-                photos[currentIndex].src;
+            const image =
+                photos[currentPhoto];
 
             const link =
                 document.createElement("a");
 
-            link.href = imageURL;
+            link.href = image.src;
 
             link.download =
-                imageURL.split("/").pop();
+                image.src.split("/").pop();
 
             document.body.appendChild(link);
 
@@ -658,82 +607,86 @@
         }
 
 
-        /* =========================
-           CLICK EVENTS
-        ========================= */
+        /* CLICK PHOTO */
 
         photos.forEach((photo, index) => {
 
             photo.parentElement.addEventListener(
                 "click",
-                () => openPreview(index)
+                function () {
+
+                    openPhoto(index);
+
+                }
             );
 
         });
 
 
-        closePreview.addEventListener(
+        /* BUTTONS */
+
+        close.addEventListener(
             "click",
-            closePreviewWindow
+            closePhoto
         );
 
-
-        nextBtn.addEventListener(
+        next.addEventListener(
             "click",
-            nextPhoto
+            showNext
         );
 
-
-        previousBtn.addEventListener(
+        previous.addEventListener(
             "click",
-            previousPhoto
+            showPrevious
         );
 
-
-        downloadBtn.addEventListener(
+        download.addEventListener(
             "click",
             downloadPhoto
         );
 
 
-        /* =========================
-           CLICK OUTSIDE IMAGE
-        ========================= */
+        /* CLOSE WHEN CLICKING BACKGROUND */
 
-        preview.addEventListener("click", (event) => {
+        preview.addEventListener(
+            "click",
+            function (event) {
 
-            if (event.target === preview) {
-                closePreviewWindow();
+                if (event.target === preview) {
+                    closePhoto();
+                }
+
             }
+        );
 
-        });
 
+        /* KEYBOARD */
 
-        /* =========================
-           KEYBOARD CONTROLS
-        ========================= */
+        document.addEventListener(
+            "keydown",
+            function (event) {
 
-        document.addEventListener("keydown", (event) => {
+                if (!preview.classList.contains("active")) {
+                    return;
+                }
 
-            if (!preview.classList.contains("show")) {
-                return;
+                if (event.key === "Escape") {
+                    closePhoto();
+                }
+
+                if (event.key === "ArrowRight") {
+                    showNext();
+                }
+
+                if (event.key === "ArrowLeft") {
+                    showPrevious();
+                }
+
             }
-
-            if (event.key === "Escape") {
-                closePreviewWindow();
-            }
-
-            if (event.key === "ArrowRight") {
-                nextPhoto();
-            }
-
-            if (event.key === "ArrowLeft") {
-                previousPhoto();
-            }
-
-        });
+        );
 
     </script>
 
 </body>
+
 </html>
