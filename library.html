@@ -21,7 +21,8 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             background: #0b0b0f;
-            color: #fff;
+            color: white;
+            min-height: 100vh;
         }
 
         /* =========================
@@ -40,10 +41,10 @@
             align-items: center;
             justify-content: space-between;
 
-            background: rgba(11, 11, 15, 0.9);
+            background: rgba(11, 11, 15, 0.90);
             backdrop-filter: blur(15px);
 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
         .logo {
@@ -65,8 +66,9 @@
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: #fff;
+            color: white;
         }
+
 
         /* =========================
            HEADER
@@ -85,29 +87,41 @@
         .header p {
             max-width: 650px;
             margin: auto;
+
             color: #999;
+
             line-height: 1.7;
         }
 
+
         /* =========================
-           GALLERY
+           PHOTO GRID
         ========================= */
 
         .gallery {
             width: 90%;
             max-width: 1400px;
+
             margin: auto;
 
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+
+            grid-template-columns:
+                repeat(auto-fill, minmax(230px, 1fr));
 
             gap: 20px;
 
             padding-bottom: 80px;
         }
 
+
+        /* =========================
+           PHOTO CARD
+        ========================= */
+
         .photo {
             position: relative;
+
             overflow: hidden;
 
             aspect-ratio: 16 / 10;
@@ -118,10 +132,15 @@
 
             cursor: pointer;
 
-            animation: showPhoto 0.6s ease forwards;
+            opacity: 0;
+
+            transform: translateY(20px);
+
+            animation: photoAppear 0.6s ease forwards;
         }
 
-        @keyframes showPhoto {
+        @keyframes photoAppear {
+
             from {
                 opacity: 0;
                 transform: translateY(20px);
@@ -131,7 +150,9 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+
         }
+
 
         .photo img {
             width: 100%;
@@ -148,6 +169,9 @@
             transform: scale(1.06);
         }
 
+
+        /* Preview overlay */
+
         .photo::after {
             content: "Preview";
 
@@ -158,7 +182,7 @@
             align-items: center;
             justify-content: center;
 
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0,0,0,0.35);
 
             opacity: 0;
 
@@ -172,6 +196,7 @@
             opacity: 1;
         }
 
+
         /* =========================
            FULL SCREEN PREVIEW
         ========================= */
@@ -183,17 +208,21 @@
             z-index: 5000;
 
             display: none;
+
             align-items: center;
             justify-content: center;
 
-            background: rgba(0, 0, 0, 0.94);
-
             padding: 30px;
+
+            background: rgba(0,0,0,0.94);
+
+            backdrop-filter: blur(8px);
         }
 
         .preview.active {
             display: flex;
         }
+
 
         .preview-image {
             max-width: 90vw;
@@ -203,12 +232,14 @@
 
             border-radius: 10px;
 
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
+            box-shadow:
+                0 20px 80px rgba(0,0,0,0.8);
 
             animation: previewOpen 0.25s ease;
         }
 
         @keyframes previewOpen {
+
             from {
                 opacity: 0;
                 transform: scale(0.94);
@@ -218,14 +249,17 @@
                 opacity: 1;
                 transform: scale(1);
             }
+
         }
 
+
         /* =========================
-           CLOSE
+           CLOSE BUTTON
         ========================= */
 
         .close {
             position: absolute;
+
             top: 22px;
             right: 25px;
 
@@ -235,7 +269,7 @@
             border: none;
             border-radius: 50%;
 
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255,255,255,0.12);
 
             color: white;
 
@@ -247,21 +281,26 @@
         }
 
         .close:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255,255,255,0.25);
+
             transform: rotate(90deg);
         }
 
+
         /* =========================
-           PREVIEW CONTROLS
+           CONTROLS
         ========================= */
 
         .controls {
             position: absolute;
+
             bottom: 28px;
 
             display: flex;
-            gap: 12px;
+
             align-items: center;
+
+            gap: 12px;
         }
 
         .control {
@@ -271,7 +310,7 @@
 
             border-radius: 10px;
 
-            background: rgba(255, 255, 255, 0.13);
+            background: rgba(255,255,255,0.13);
 
             color: white;
 
@@ -283,19 +322,26 @@
         }
 
         .control:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255,255,255,0.25);
+
             transform: translateY(-2px);
         }
 
+
+        /* DOWNLOAD */
+
         .download {
             background: white;
+
             color: black;
+
             font-weight: bold;
         }
 
         .download:hover {
             background: #ddd;
         }
+
 
         /* =========================
            MOBILE
@@ -325,7 +371,10 @@
 
             .gallery {
                 width: 94%;
-                grid-template-columns: repeat(2, 1fr);
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
                 gap: 10px;
             }
 
@@ -344,6 +393,7 @@
 
             .control {
                 padding: 10px 14px;
+
                 font-size: 13px;
             }
 
@@ -352,18 +402,25 @@
                 right: 15px;
             }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <!-- NAVIGATION -->
+
+    <!-- =========================
+         NAVIGATION
+    ========================= -->
 
     <nav>
 
         <div class="logo">
             Photo Library
         </div>
+
 
         <ul class="nav-links">
 
@@ -374,7 +431,9 @@
             </li>
 
             <li>
-                <a href="library.html" class="active">
+                <a
+                    href="library.html"
+                    class="active">
                     Library
                 </a>
             </li>
@@ -390,11 +449,16 @@
     </nav>
 
 
-    <!-- HEADER -->
+
+    <!-- =========================
+         HEADER
+    ========================= -->
 
     <section class="header">
 
-        <h1>Photo Library</h1>
+        <h1>
+            Photo Library
+        </h1>
 
         <p>
             Explore the collection. Click any photo
@@ -404,96 +468,141 @@
     </section>
 
 
+
     <!-- =========================
-         WALLPAPER LIBRARY
+         PHOTO LIBRARY
          
          IMPORTANT:
-         Your wallpaper files should be
-         inside the "wallpapers" folder.
-
-         Change ONLY the filenames below
-         if your files have different names.
+         These paths match your
+         actual GitHub files.
     ========================= -->
 
     <main class="gallery">
 
-        <div class="photo">
-            <img src="wallpapers/1.jpg" loading="lazy" alt="Wallpaper">
-        </div>
 
         <div class="photo">
-            <img src="wallpapers/2.jpg" loading="lazy" alt="Wallpaper">
+
+            <img
+                src="wallpaper1.jpg"
+                loading="lazy"
+                alt="Wallpaper">
+
         </div>
 
-        <div class="photo">
-            <img src="wallpapers/3.jpg" loading="lazy" alt="Wallpaper">
-        </div>
 
         <div class="photo">
-            <img src="wallpapers/4.jpg" loading="lazy" alt="Wallpaper">
+
+            <img
+                src="wallpaper2.jpg"
+                loading="lazy"
+                alt="Wallpaper">
+
         </div>
 
-        <div class="photo">
-            <img src="wallpapers/5.jpg" loading="lazy" alt="Wallpaper">
-        </div>
 
         <div class="photo">
-            <img src="wallpapers/6.jpg" loading="lazy" alt="Wallpaper">
+
+            <img
+                src="wallpaper3.jpg"
+                loading="lazy"
+                alt="Wallpaper">
+
         </div>
 
-        <div class="photo">
-            <img src="wallpapers/7.jpg" loading="lazy" alt="Wallpaper">
-        </div>
 
         <div class="photo">
-            <img src="wallpapers/8.jpg" loading="lazy" alt="Wallpaper">
+
+            <img
+                src="wallpaper4.jpg"
+                loading="lazy"
+                alt="Wallpaper">
+
         </div>
 
-        <div class="photo">
-            <img src="wallpapers/9.jpg" loading="lazy" alt="Wallpaper">
-        </div>
 
         <div class="photo">
-            <img src="wallpapers/10.jpg" loading="lazy" alt="Wallpaper">
+
+            <img
+                src="wallpaper5.jpg"
+                loading="lazy"
+                alt="Wallpaper">
+
         </div>
+
 
     </main>
+
 
 
     <!-- =========================
          PHOTO PREVIEW
     ========================= -->
 
-    <div class="preview" id="preview">
+    <div
+        class="preview"
+        id="preview">
 
-        <button class="close" id="close">
+
+        <!-- CLOSE -->
+
+        <button
+            class="close"
+            id="close">
+
             ×
+
         </button>
+
+
+
+        <!-- LARGE PHOTO -->
 
         <img
             class="preview-image"
             id="previewImage"
             src=""
-            alt="Photo Preview"
-        >
+            alt="Photo Preview">
+
+
+
+        <!-- CONTROLS -->
 
         <div class="controls">
 
-            <button class="control" id="previous">
+
+            <button
+                class="control"
+                id="previous">
+
                 ←
+
             </button>
 
-            <button class="control download" id="download">
+
+
+            <button
+                class="control download"
+                id="download">
+
                 ↓ Download
+
             </button>
 
-            <button class="control" id="next">
+
+
+            <button
+                class="control"
+                id="next">
+
                 →
+
             </button>
+
 
         </div>
 
     </div>
+
 
 
     <!-- =========================
@@ -502,32 +611,56 @@
 
     <script>
 
+
         const photos =
-            document.querySelectorAll(".photo img");
+            document.querySelectorAll(
+                ".photo img"
+            );
+
 
         const preview =
-            document.getElementById("preview");
+            document.getElementById(
+                "preview"
+            );
+
 
         const previewImage =
-            document.getElementById("previewImage");
+            document.getElementById(
+                "previewImage"
+            );
+
 
         const close =
-            document.getElementById("close");
+            document.getElementById(
+                "close"
+            );
+
 
         const previous =
-            document.getElementById("previous");
+            document.getElementById(
+                "previous"
+            );
+
 
         const next =
-            document.getElementById("next");
+            document.getElementById(
+                "next"
+            );
+
 
         const download =
-            document.getElementById("download");
+            document.getElementById(
+                "download"
+            );
 
 
         let currentPhoto = 0;
 
 
-        /* OPEN PHOTO */
+
+        /* =========================
+           OPEN PREVIEW
+        ========================= */
 
         function openPhoto(index) {
 
@@ -536,109 +669,168 @@
             previewImage.src =
                 photos[currentPhoto].src;
 
-            preview.classList.add("active");
+            preview.classList.add(
+                "active"
+            );
 
-            document.body.style.overflow = "hidden";
+            document.body.style.overflow =
+                "hidden";
+
         }
 
 
-        /* CLOSE PHOTO */
+
+        /* =========================
+           CLOSE PREVIEW
+        ========================= */
 
         function closePhoto() {
 
-            preview.classList.remove("active");
+            preview.classList.remove(
+                "active"
+            );
 
-            document.body.style.overflow = "";
+            document.body.style.overflow =
+                "";
 
             previewImage.src = "";
+
         }
 
 
-        /* NEXT */
+
+        /* =========================
+           NEXT PHOTO
+        ========================= */
 
         function showNext() {
 
             currentPhoto++;
 
-            if (currentPhoto >= photos.length) {
+            if (
+                currentPhoto >=
+                photos.length
+            ) {
+
                 currentPhoto = 0;
+
             }
 
             previewImage.src =
                 photos[currentPhoto].src;
+
         }
 
 
-        /* PREVIOUS */
+
+        /* =========================
+           PREVIOUS PHOTO
+        ========================= */
 
         function showPrevious() {
 
             currentPhoto--;
 
-            if (currentPhoto < 0) {
-                currentPhoto = photos.length - 1;
+            if (
+                currentPhoto < 0
+            ) {
+
+                currentPhoto =
+                    photos.length - 1;
+
             }
 
             previewImage.src =
                 photos[currentPhoto].src;
+
         }
 
 
-        /* DOWNLOAD */
+
+        /* =========================
+           DOWNLOAD PHOTO
+        ========================= */
 
         function downloadPhoto() {
 
             const image =
                 photos[currentPhoto];
 
-            const link =
-                document.createElement("a");
 
-            link.href = image.src;
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            link.href =
+                image.src;
+
 
             link.download =
-                image.src.split("/").pop();
+                image.src
+                    .split("/")
+                    .pop();
 
-            document.body.appendChild(link);
+
+            document.body.appendChild(
+                link
+            );
+
 
             link.click();
 
-            document.body.removeChild(link);
+
+            document.body.removeChild(
+                link
+            );
+
         }
 
 
-        /* CLICK PHOTO */
 
-        photos.forEach((photo, index) => {
+        /* =========================
+           PHOTO CLICK
+        ========================= */
 
-            photo.parentElement.addEventListener(
-                "click",
-                function () {
+        photos.forEach(
+            (photo, index) => {
 
-                    openPhoto(index);
+                photo.parentElement.addEventListener(
+                    "click",
+                    function () {
 
-                }
-            );
+                        openPhoto(index);
 
-        });
+                    }
+                );
+
+            }
+        );
 
 
-        /* BUTTONS */
+
+        /* =========================
+           BUTTONS
+        ========================= */
 
         close.addEventListener(
             "click",
             closePhoto
         );
 
+
         next.addEventListener(
             "click",
             showNext
         );
 
+
         previous.addEventListener(
             "click",
             showPrevious
         );
+
 
         download.addEventListener(
             "click",
@@ -646,46 +838,83 @@
         );
 
 
-        /* CLOSE WHEN CLICKING BACKGROUND */
+
+        /* =========================
+           CLOSE BACKGROUND
+        ========================= */
 
         preview.addEventListener(
             "click",
-            function (event) {
+            function(event) {
 
-                if (event.target === preview) {
+                if (
+                    event.target ===
+                    preview
+                ) {
+
                     closePhoto();
+
                 }
 
             }
         );
 
 
-        /* KEYBOARD */
+
+        /* =========================
+           KEYBOARD CONTROLS
+        ========================= */
 
         document.addEventListener(
             "keydown",
-            function (event) {
+            function(event) {
 
-                if (!preview.classList.contains("active")) {
+                if (
+                    !preview.classList.contains(
+                        "active"
+                    )
+                ) {
+
                     return;
+
                 }
 
-                if (event.key === "Escape") {
+
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
+
                     closePhoto();
+
                 }
 
-                if (event.key === "ArrowRight") {
+
+                if (
+                    event.key ===
+                    "ArrowRight"
+                ) {
+
                     showNext();
+
                 }
 
-                if (event.key === "ArrowLeft") {
+
+                if (
+                    event.key ===
+                    "ArrowLeft"
+                ) {
+
                     showPrevious();
+
                 }
 
             }
         );
 
+
     </script>
+
 
 </body>
 
